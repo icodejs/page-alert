@@ -1,0 +1,26 @@
+{
+  "name": "page-alerts",
+  "version": "0.0.1",
+  "description": "Alert me when a website changes based on a custom criteria",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/icodejs/page-alerts.git"
+  },
+  "keywords": [
+    "page",
+    "alert",
+    "web",
+    "scrape",
+    "mail"
+  ],
+  "author": "icodejs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/icodejs/page-alerts/issues"
+  },
+  "homepage": "https://github.com/icodejs/page-alerts#readme"
+}
