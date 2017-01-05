@@ -1,31 +1,36 @@
 import request from 'request-promise';
 import cheerio from 'cheerio';
 
-const url = 'https://footyaddicts.com/football-games/19308-9-a-side-football-westway-sports-centre-london';
+const url = 'https://footyaddicts.com/football-games/18778-5-a-side-football-playfootball-shepherds-bush-london';
 
 request({ url })
   .then(cheerio.load)
   .then($ => {
     const $players = $('.player');
-    const count = $players.length;
+    const numbersAside = $players.length;
     const players = $players.map((index, el) => {
-      return $(el).find('a').attr('title');
+      const name = $(el).find('a').attr('title');
+      if (!name) {
+        return 'open'
+      }
+      return name;
     }).toArray();
 
-    return { count, players }
+    return { numbersAside, players }
   })
-  .then(({ count, players }) => {
+  .then(({ numbersAside, players }) => {
     const duds = [
       'PlayFootball Staff',
       'Koulis Papadopoulos',
       'Kos Den',
       'Kos Den\'s',
       'Goran Dravic',
+      'open',
       undefined
     ];
 
-    const spaces = count - players.filter(p => duds.indexOf(p) > -1).length;
-    return spaces;
+    const squad = players.filter(p => duds.indexOf(p) === -1).length;
+    return numbersAside - squad;
   })
-  .then(console.log)
+  .then(console.log) // if one space left, send an email
   .catch(console.err);
