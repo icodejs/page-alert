@@ -3,7 +3,7 @@ import cheerio from 'cheerio';
 export const assertion = () => (html) => {
   const gameInformation = getGameInformations(html);
   const spaces = getAvailablity(gameInformation);
-  return spaces !== 1;
+  return { alert: spaces === 1, message: `${spaces} spaces left` };
 };
 
 export const getMailOptions = ({ url, email, recipient }) => (assertTrue) => {
