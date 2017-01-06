@@ -1,3 +1,5 @@
+/* eslint-disable no-undefined */
+
 import request from 'request-promise';
 import nodemailer from 'nodemailer';
 import cheerio from 'cheerio';
@@ -15,12 +17,12 @@ request({ url })
     const players = $players.map((index, el) => {
       const name = $(el).find('a').attr('title');
       if (!name) {
-        return 'open'
+        return 'open';
       }
       return name;
     }).toArray();
 
-    return { numbersAside, players }
+    return { numbersAside, players };
   })
   .then(({ numbersAside, players }) => {
     const duds = [

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node ./src/server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "reinstall": "rm -rf ./node_modules/ && npm install"
+    "reinstall": "rm -rf ./node_modules/ && npm install",
+    "lint": "./node_modules/.bin/eslint ./src"
   },
   "repository": {
     "type": "git",
@@ -36,5 +37,9 @@
     "optimist": "^0.6.1",
     "request": "^2.79.0",
     "request-promise": "^4.1.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "eslint": "^3.12.2"
   }
 }
