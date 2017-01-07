@@ -1,2 +1,3 @@
 require('babel-core/register');
-module.exports = require('./page-alerts');
+require('babel-polyfill');
+require('./page-alerts')();

@@ -6,19 +6,24 @@ import queryPage from './query-page';
 const [ url, email, password, recipient, duration = 5 ] = optimist.argv._;
 const transport = `smtps://${email}:${password}@smtp.gmail.com`;
 const transporter = nodemailer.createTransport(transport);
-const options = { url, email, password, recipient, duration };
 
-queryPage(options)
-  .then(getMailOptions(options))
-  .then((mailOptions) => {
-    return new Promise((resolve, reject) => {
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return reject(error);
-        }
-        resolve('Message sent: ' + info.response);
-      });
-    });
-  })
-  .then(console.log)
-  .catch(console.err);
+module.exports = async function() {
+  const send = await queryPage({ url, duration });
+
+  if (!send) {
+    return;
+  }
+
+  const mailOptions = await getMailOptions({
+    url,
+    email,
+    recipient
+  });
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.error(error);
+    }
+    console.log('Message sent: ' + info.response);
+  });
+};

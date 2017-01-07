@@ -1,6 +1,6 @@
 import cheerio from 'cheerio';
 
-export const assertion = () => (html) => {
+export const assertion = (html) => {
   const spaces = getAvailablity(queryPage(html));
   return {
     send: spaces === 1,

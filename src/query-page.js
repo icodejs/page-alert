@@ -2,19 +2,24 @@ import request from 'request-promise';
 import sek from 'sek';
 import { assertion } from './sites/footy-addicts';
 
-export default ({ url, email, password, recipient, duration }) => {
+async function query(url) {
+  const html = await request({ url });
+  return assertion(html);
+}
+
+export default ({ url, duration }) => {
   return new Promise((resolve, reject) => {
     const interval = setInterval(() => {
-      request({ url })
-        .then(assertion({ url, email, password, recipient }))
+      query(url)
         .then((result) => {
           if (result.send) {
             clearInterval(interval);
-            resolve();
+            resolve(true);
           }
           console.log(result.message);
         })
         .catch(reject);
+
     }, sek(duration));
   });
 };
