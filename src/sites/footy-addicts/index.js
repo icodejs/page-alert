@@ -1,14 +1,15 @@
 import cheerio from 'cheerio';
 
 export const assertion = (html) => {
-  const spaces = getAvailablity(queryPage(html));
+  const players = queryPage(html);
+  const spaces = getOpenSpaces(players);
   return {
     send: spaces === 1,
     message: `${spaces} spaces left`
   };
 };
 
-export const getMailOptions = ({ url, email, recipient }) => () => {
+export const getMailOptions = ({ url, email, recipient }) => {
   return {
     from: '"Page Alerts" <page-alerts@noreply.com>',
     to: recipient || email,
@@ -21,29 +22,25 @@ export const getMailOptions = ({ url, email, recipient }) => () => {
 
 function queryPage(html) {
   const $ = cheerio.load(html);
-  const $players = $('.player');
-  const playerCount = $players.length;
-  const players = $players.map((index, el) => {
-    const name = $(el).find('a').attr('title');
-    if (!name) {
-      return 'open';
-    }
-    return name;
+  return $('.player').map((index, el) => {
+    return $(el)
+      .find('a')
+      .text()
+      .replace(/\n/gi, '');
   }).toArray();
-
-  return { playerCount, players };
 }
 
-function getAvailablity({ playerCount, players }) {
-  /* eslint-disable no-undefined */
+function getOpenSpaces(players) {
   const duds = [
     'PlayFootball Staff',
     'Koulis Papadopoulos',
     'Kos Den',
-    'Kos Den\'s',
     'Goran Dravic',
-    'open',
-    undefined
+    'Open Spot',
+    'Guest'
   ];
-  return playerCount - players.filter(p => duds.indexOf(p) === -1).length;
+
+  return players.filter(player => {
+    return duds.some(dud => player.indexOf(dud) > -1);
+  }).length;
 }

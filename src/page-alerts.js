@@ -14,7 +14,7 @@ module.exports = async function() {
     return;
   }
 
-  const mailOptions = await getMailOptions({
+  const mailOptions = getMailOptions({
     url,
     email,
     recipient

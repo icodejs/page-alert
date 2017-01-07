@@ -19,7 +19,6 @@ export default ({ url, duration }) => {
           console.log(result.message);
         })
         .catch(reject);
-
     }, sek(duration));
   });
 };
