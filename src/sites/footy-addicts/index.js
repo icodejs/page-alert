@@ -1,25 +1,25 @@
 import cheerio from 'cheerio';
 
 export const assertion = () => (html) => {
-  const gameInformation = getGameInformations(html);
-  const spaces = getAvailablity(gameInformation);
-  return { alert: spaces === 1, message: `${spaces} spaces left` };
+  const spaces = getAvailablity(queryPage(html));
+  return {
+    send: spaces === 1,
+    message: `${spaces} spaces left`
+  };
 };
 
-export const getMailOptions = ({ url, email, recipient }) => (assertTrue) => {
-  if (!assertTrue) {
-    return;
-  }
-
+export const getMailOptions = ({ url, email, recipient }) => () => {
   return {
     from: '"Page Alerts" <page-alerts@noreply.com>',
     to: recipient || email,
     subject: 'Footy Addicts - Last Space',
-    html: `<p>There's 1 space available at: <a href="${url}">${url}</a></p>`
+    html: `<p>
+      There's 1 space available at: <a href="${url}">${url}</a>
+    </p>`
   };
 };
 
-function getGameInformations(html) {
+function queryPage(html) {
   const $ = cheerio.load(html);
   const $players = $('.player');
   const playerCount = $players.length;

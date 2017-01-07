@@ -8,9 +8,9 @@ export default ({ url, email, password, recipient, duration }) => {
       request({ url })
         .then(assertion({ url, email, password, recipient }))
         .then((result) => {
-          if (result.alert) {
+          if (result.send) {
             clearInterval(interval);
-            resolve(result.alert);
+            resolve();
           }
           console.log(result.message);
         })
