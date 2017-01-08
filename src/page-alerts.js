@@ -7,7 +7,7 @@ const [ url, email, password, recipient, duration = 5 ] = optimist.argv._;
 const transport = `smtps://${email}:${password}@smtp.gmail.com`;
 const transporter = nodemailer.createTransport(transport);
 
-module.exports = async function() {
+(async function() {
   const send = await queryPage({ url, duration });
 
   if (!send) {
@@ -26,4 +26,4 @@ module.exports = async function() {
     }
     console.log('Message sent: ' + info.response);
   });
-};
+}());
