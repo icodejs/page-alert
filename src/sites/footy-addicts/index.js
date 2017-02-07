@@ -37,7 +37,12 @@ function getOpenSpaces(players) {
     'Kos Den',
     'Goran Dravic',
     'Open Spot',
-    'Guest'
+    'Guest',
+    'Mohamed Ibrahim',
+    'Abdelhamid El Kaoutari',
+    'Tumer Metin',
+    'Miguel Rodriguez',
+    'Javier Martínez',
   ];
 
   return players.filter(player => {
